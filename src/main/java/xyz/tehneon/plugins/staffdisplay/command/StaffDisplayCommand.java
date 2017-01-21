@@ -1,9 +1,8 @@
 package xyz.tehneon.plugins.staffdisplay.command;
 
 import org.bukkit.ChatColor;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.defaults.BukkitCommand;
 import org.bukkit.entity.Player;
 import xyz.tehneon.plugins.staffdisplay.StaffDisplay;
 
@@ -13,15 +12,16 @@ import xyz.tehneon.plugins.staffdisplay.StaffDisplay;
  * <p>
  * The class which handles all things orientated to the command.
  */
-public class StaffDisplayCommand implements CommandExecutor {
+public class StaffDisplayCommand extends BukkitCommand {
     private StaffDisplay plugin;
 
     public StaffDisplayCommand(StaffDisplay plugin) {
+        super("staffdisplay");
         this.plugin = plugin;
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+    public boolean execute(CommandSender sender, String commandLabel, String[] args) {
         if (!(sender instanceof Player)) {
             sender.sendMessage(ChatColor.RED + "Only players may execute this command.");
             return true;
