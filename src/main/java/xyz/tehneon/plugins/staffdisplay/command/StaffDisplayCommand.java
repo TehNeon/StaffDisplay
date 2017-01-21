@@ -30,7 +30,7 @@ public class StaffDisplayCommand extends BukkitCommand {
                 case "reload":
                     break;
                 case "info":
-                    sender.sendMessage(ChatColor.GOLD + "StaffDisplay v");
+                    sender.sendMessage(ChatColor.GOLD + "StaffDisplay v" + plugin.getDescription().getVersion());
                     sender.sendMessage(ChatColor.GOLD + " Created by TehNeon.");
                     return true;
                 default:
