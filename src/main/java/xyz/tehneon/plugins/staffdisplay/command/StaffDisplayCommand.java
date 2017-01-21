@@ -28,15 +28,19 @@ public class StaffDisplayCommand extends BukkitCommand {
             String subCommand = args[0];
             switch (subCommand.toLowerCase()) {
                 case "reload":
+                    plugin.reloadConfig();
+                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("messages.reloaded")));
                     break;
                 case "info":
                     sender.sendMessage(ChatColor.GOLD + "StaffDisplay v" + plugin.getDescription().getVersion());
                     sender.sendMessage(ChatColor.GOLD + " Created by TehNeon.");
-                    return true;
+                    break;
                 default:
-                    sender.sendMessage(ChatColor.RED + "Invalid sub-command.");
-                    return true;
+                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("messages.invalid-subcommand")));
+                    break;
             }
+
+            return true;
         }
 
         if (!sender.hasPermission(plugin.getConfig().getString("command.permission"))) {
