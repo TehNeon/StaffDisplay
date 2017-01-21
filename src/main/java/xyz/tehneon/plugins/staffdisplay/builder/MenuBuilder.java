@@ -29,7 +29,7 @@ public class MenuBuilder {
      * Builds/Creates the menu/inventory.
      */
     private void buildMenu() {
-        inventory = Bukkit.createInventory(null, 9, ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("menu.title")));
+        inventory = Bukkit.createInventory(null, roundUp(targetUserList.size() / 9d), ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("menu.title")));
     }
 
 
@@ -61,5 +61,16 @@ public class MenuBuilder {
      */
     public boolean isTheMenu(Inventory otherInventory) {
         return otherInventory.equals(getInventory());
+    }
+
+    /**
+     * Rounds a value upwards.
+     *
+     * Found this on StackOverflow a long time ago and don't remember the link to credit for
+     * @param d Double which needs to be rounded up
+     * @return Returns the value rounded up
+     */
+    private int roundUp(double d) {
+        return (d > (int) d) ? (int) d + 1 : (int) d;
     }
 }
