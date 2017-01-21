@@ -33,7 +33,7 @@ public class MenuBuilder {
      */
     private void buildMenu() {
         // Create the inventory menu, and the size based off of how many people are viewed/registered as staff
-        inventory = Bukkit.createInventory(null, roundUp(targetUserList.size() / 9d), ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("menu.title")));
+        inventory = Bukkit.createInventory(null, 9 * roundUp(targetUserList.size() / 9d), ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("menu.title")));
 
         // TODO: Place items inside the menu
     }
