@@ -20,6 +20,10 @@ public class MenuListener implements Listener {
 
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
-        // TODO: Check if the menu clicked has the title which is given inside the config
+        if (event.getClickedInventory() != null) {
+            if (plugin.getMenuBuilder().isTheMenu(event.getClickedInventory())) {
+                event.setCancelled(true);
+            }
+        }
     }
 }
