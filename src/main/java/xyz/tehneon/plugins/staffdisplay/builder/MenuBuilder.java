@@ -27,12 +27,12 @@ public class MenuBuilder {
     public MenuBuilder(StaffDisplay plugin) {
         this.plugin = plugin;
 
-        // Run the update 1 tick after startup so that all plugins are loaded properly, allowing for Hooks to properly be set in place
+        // Run the update 2 ticks after startup so that all plugins are loaded properly, allowing for Hooks to properly be set in place
         new BukkitRunnable() {
             public void run() {
                 updateMenu();
             }
-        }.runTaskLater(plugin, 1L);
+        }.runTaskLater(plugin, 2L);
     }
 
     /**

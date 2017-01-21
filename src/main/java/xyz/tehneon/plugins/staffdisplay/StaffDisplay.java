@@ -67,7 +67,12 @@ public final class StaffDisplay extends JavaPlugin {
         }
 
         getLogger().info("Using permissions hook for: " + permissionsHook.getPluginName());
-        permissionsHook.init();
+        new BukkitRunnable() {
+            public void run() {
+                permissionsHook.init();
+                getLogger().info("Hook initialized");
+            }
+        }.runTaskLater(this, 1L);
 
         menuBuilder = new MenuBuilder(this);
         getServer().getPluginManager().registerEvents(new MenuListener(this), this);
