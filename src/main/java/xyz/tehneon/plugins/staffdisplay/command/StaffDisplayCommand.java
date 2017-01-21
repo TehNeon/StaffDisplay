@@ -16,7 +16,9 @@ public class StaffDisplayCommand extends BukkitCommand {
     private StaffDisplay plugin;
 
     public StaffDisplayCommand(StaffDisplay plugin) {
-        super("staffdisplay");
+        super(plugin.getConfig().getString("command.label"));
+        setAliases(plugin.getConfig().getStringList("command.aliases"));
+        setDescription("Display all the staff of this server.");
         this.plugin = plugin;
     }
 

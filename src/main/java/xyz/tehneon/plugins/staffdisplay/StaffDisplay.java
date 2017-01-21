@@ -19,6 +19,8 @@ public final class StaffDisplay extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        saveDefaultConfig();
+
         // Thanks to ItsSteve for the general concept of using the commandMap to register commands without using the plugin.yml
         // Source: https://www.spigotmc.org/threads/small-easy-register-command-without-plugin-yml.38036/
         if (getServer().getPluginManager() instanceof SimplePluginManager) {
@@ -33,7 +35,7 @@ public final class StaffDisplay extends JavaPlugin {
             }
 
             if (commandMap != null) {
-                commandMap.register("staffdisplay", new StaffDisplayCommand(this));
+                commandMap.register(getConfig().getString("command.label"), new StaffDisplayCommand(this));
             } else {
                 getServer().getPluginManager().disablePlugin(this);
                 new RuntimeException("Your server software's PluginManager does not contain a commandMap so I cannot register a command. This may be due to the fact you might be running a custom Bukkit/Spigot version.");
