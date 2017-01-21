@@ -35,7 +35,9 @@ public class MenuBuilder {
         // Create the inventory menu, and the size based off of how many people are viewed/registered as staff
         inventory = Bukkit.createInventory(null, 9 * roundUp(targetUserList.size() / 9d), ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("menu.title")));
 
-        // TODO: Place items inside the menu
+        for(TargetUser targetUser: targetUserList) {
+
+        }
     }
 
 
@@ -45,6 +47,9 @@ public class MenuBuilder {
      * groups. This also builds the menu right after.
      */
     public void updateMenu() {
+        // Clear it from old entries
+        targetUserList.clear();
+
         // Loop through all the ranks inside the config to grab
         for (String rankName : plugin.getConfig().getStringList("ranks")) {
             PermissionGroup permissionGroup = PermissionsEx.getPermissionManager().getGroup(rankName);
