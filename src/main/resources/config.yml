@@ -1,0 +1,29 @@
+# The mechanism which checks how often the plugin should update the GUI
+staff-updater:
+  # How long should it wait per update
+  delay: 300
+
+# Information related to the menu which opens
+menu:
+ # The title of the menu
+ title: "Our Staff Members"
+
+ # Section which allows you to configure what each rank/item looks like
+ # The plugin will check if there is content for each rank and if not it
+ # will automatically default to using the default item, allowing you to
+ # have certain ranks looking different from others
+ items:
+  default:
+   # The display name of the item
+   display: "&c{username}"
+   # The lore of the item
+   lore:
+    - "&6Staff Member"
+    - "&7IGN: &e&l{username}"
+    - "&7Rank: &e&l{rank}"
+
+# Which ranks should be display in the menu and in which order
+# Sorted from top to bottom
+ranks:
+ - "Owner"
+ - "Admin"
