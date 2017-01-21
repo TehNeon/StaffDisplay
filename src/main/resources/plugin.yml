@@ -2,3 +2,4 @@ name: StaffDisplay
 version: ${project.version}
 main: xyz.tehneon.plugins.staffdisplay.StaffDisplay
 authors: [TehNeon]
+description: ${project.description}
