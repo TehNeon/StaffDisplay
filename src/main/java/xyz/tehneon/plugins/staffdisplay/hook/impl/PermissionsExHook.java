@@ -20,6 +20,11 @@ public class PermissionsExHook implements PluginHook {
     }
 
     @Override
+    public void init() {
+
+    }
+
+    @Override
     public void updatePlayers() {
         // Loop through all the ranks inside the config to grab
         for (String rankName : plugin.getConfig().getStringList("ranks")) {
