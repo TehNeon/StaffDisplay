@@ -1,8 +1,8 @@
 # Ability to change the usage of the command
 command:
- # The main label for the command
+ # The main label for the command (Only changes on server start up, or reload)
  label: "staffdisplay"
- # Any other ways the command should be accessed
+ # Any other ways the command should be accessed (Only changes on server start up, or reload)
  aliases:
   - "staffd"
   - "sd"
