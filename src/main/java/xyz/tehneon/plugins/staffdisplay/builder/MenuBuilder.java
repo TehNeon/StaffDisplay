@@ -50,6 +50,15 @@ public class MenuBuilder {
             skullMeta.setOwner(targetUser.getUsername());
             skullMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("menu.items." + configSection + ".display").replace("{username}", targetUser.getUsername())));
 
+            List<String> itemLore = new ArrayList<>();
+
+            for (String loreItem : plugin.getConfig().getStringList("menu.items." + configSection + ".lore")) {
+                loreItem = loreItem.replace("{username}", targetUser.getUsername());
+                loreItem = loreItem.replace("{rank}", targetUser.getRankName());
+
+                itemLore.add(ChatColor.translateAlternateColorCodes('&', loreItem));
+            }
+            skullMeta.setLore(itemLore);
 
             itemStack.setItemMeta(skullMeta);
             inventory.addItem(itemStack);
