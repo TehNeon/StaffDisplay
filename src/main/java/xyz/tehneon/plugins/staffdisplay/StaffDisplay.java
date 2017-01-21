@@ -3,6 +3,7 @@ package xyz.tehneon.plugins.staffdisplay;
 import org.bukkit.command.CommandMap;
 import org.bukkit.plugin.SimplePluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
 import xyz.tehneon.plugins.staffdisplay.builder.MenuBuilder;
 import xyz.tehneon.plugins.staffdisplay.command.StaffDisplayCommand;
 import xyz.tehneon.plugins.staffdisplay.listener.MenuListener;
@@ -18,6 +19,7 @@ import java.lang.reflect.Field;
 public final class StaffDisplay extends JavaPlugin {
 
     private MenuBuilder menuBuilder;
+    private BukkitRunnable updateTask;
 
     @Override
     public void onEnable() {
@@ -47,10 +49,26 @@ public final class StaffDisplay extends JavaPlugin {
             new RuntimeException("Your server software is running a PluginManager that is unrecognized. This may be due to the fact you might be running a custom Bukkit/Spigot version.");
         }
 
-        // Register everything after the command incase the command cannot register it will disable the plugin
+        // Register everything after the command just in case the command cannot register it will disable the plugin
         menuBuilder = new MenuBuilder(this);
-
         getServer().getPluginManager().registerEvents(new MenuListener(this), this);
+
+        updateTask = new BukkitRunnable() {
+            @Override
+            public void run() {
+                getMenuBuilder().updateMenu();
+            }
+        };
+
+        updateTask.runTaskLater(this, getConfig().getLong("staff-updater.delay") * 20);
+    }
+
+    /**
+     * Used to update the updateTask when the plugin has a config based reload
+     */
+    public void reload() {
+        updateTask.cancel();
+        updateTask.runTaskLater(this, getConfig().getLong("staff-updater.delay") * 20);
     }
 
     @Override

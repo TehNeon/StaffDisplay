@@ -10,7 +10,8 @@ command:
 
 # The mechanism which checks how often the plugin should update the GUI
 staff-updater:
-  # How long should it wait per update
+  # How long should it wait per update, this is in seconds
+  # Default value is 5 minutes
   delay: 300
 
 # Information related to the menu which opens
@@ -38,6 +39,7 @@ ranks:
  - "Owner"
  - "Admin"
 
+# Any messages that are sent to the user
 messages:
  no-permission: "&cYou do not have permission to execute this command."
  opened: "&aStaff menu has opened!"
