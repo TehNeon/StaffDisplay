@@ -10,7 +10,7 @@
     <packaging>jar</packaging>
 
     <name>StaffDisplay</name>
-    <description>Creates a displayable menu which hooks into a Permissions plugin to list all Staff members.</description>
+    <description>Creates a displayable menu which hooks into a permissions plugin to list all staff members.</description>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
