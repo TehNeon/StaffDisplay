@@ -63,14 +63,6 @@ public final class StaffDisplay extends JavaPlugin {
         updateTask.runTaskLater(this, getConfig().getLong("staff-updater.delay") * 20);
     }
 
-    /**
-     * Used to update the updateTask when the plugin has a config based reload
-     */
-    public void reload() {
-        getServer().getScheduler().cancelTask(updateTask.getTaskId());
-        updateTask.runTaskLater(this, getConfig().getLong("staff-updater.delay") * 20);
-    }
-
     @Override
     public void onDisable() {
 

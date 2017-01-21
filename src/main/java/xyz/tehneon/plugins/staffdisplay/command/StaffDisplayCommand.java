@@ -34,7 +34,6 @@ public class StaffDisplayCommand extends BukkitCommand {
                     }
 
                     plugin.reloadConfig();
-                    plugin.reload();
                     plugin.getMenuBuilder().updateMenu();
                     sender.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("messages.reloaded")));
                     break;

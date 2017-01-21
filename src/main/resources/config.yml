@@ -14,6 +14,7 @@ command:
 staff-updater:
   # How long should it wait per update, this is in seconds
   # Default value is 5 minutes
+  # (Only changes on server start up, or reload)
   delay: 300
 
 # Information related to the menu which opens
