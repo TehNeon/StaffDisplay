@@ -2,7 +2,11 @@ package xyz.tehneon.plugins.staffdisplay.builder;
 
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.bukkit.SkullType;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.SkullMeta;
 import ru.tehkode.permissions.PermissionGroup;
 import ru.tehkode.permissions.PermissionUser;
 import ru.tehkode.permissions.bukkit.PermissionsEx;
@@ -35,8 +39,20 @@ public class MenuBuilder {
         // Create the inventory menu, and the size based off of how many people are viewed/registered as staff
         inventory = Bukkit.createInventory(null, 9 * roundUp(targetUserList.size() / 9d), ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("menu.title")));
 
-        for(TargetUser targetUser: targetUserList) {
+        for (TargetUser targetUser : targetUserList) {
+            String configSection = "default";
+            if (plugin.getConfig().get("menu.items." + targetUser.getRankName()) != null) {
+                configSection = targetUser.getRankName();
+            }
 
+            ItemStack itemStack = new ItemStack(Material.SKULL_ITEM, 1, (short) SkullType.PLAYER.ordinal());
+            SkullMeta skullMeta = (SkullMeta) itemStack.getItemMeta();
+            skullMeta.setOwner(targetUser.getUsername());
+            skullMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("menu.items." + configSection + ".display").replace("{username}", targetUser.getUsername())));
+
+
+            itemStack.setItemMeta(skullMeta);
+            inventory.addItem(itemStack);
         }
     }
 
