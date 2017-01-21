@@ -7,6 +7,7 @@ import org.bukkit.SkullType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
+import org.bukkit.scheduler.BukkitRunnable;
 import xyz.tehneon.plugins.staffdisplay.StaffDisplay;
 
 import java.util.ArrayList;
@@ -26,7 +27,12 @@ public class MenuBuilder {
     public MenuBuilder(StaffDisplay plugin) {
         this.plugin = plugin;
 
-        updateMenu();
+        // Run the update 1 tick after startup so that all plugins are loaded properly, allowing for Hooks to properly be set in place
+        new BukkitRunnable() {
+            public void run() {
+                updateMenu();
+            }
+        }.runTaskLater(plugin, 1L);
     }
 
     /**

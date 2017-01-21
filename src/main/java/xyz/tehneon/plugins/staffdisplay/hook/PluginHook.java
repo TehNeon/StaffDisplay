@@ -7,4 +7,6 @@ package xyz.tehneon.plugins.staffdisplay.hook;
 public interface PluginHook {
 
     void updatePlayers();
+
+    String getPluginName();
 }

@@ -33,4 +33,9 @@ public class PermissionsExHook implements PluginHook {
             }
         }
     }
+
+    @Override
+    public String getPluginName() {
+        return "PermissionsEx";
+    }
 }
