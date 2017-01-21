@@ -1,8 +1,8 @@
 package xyz.tehneon.plugins.staffdisplay;
 
+import com.github.cheesesoftware.PowerfulPermsAPI.PowerfulPermsPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandMap;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.SimplePluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -11,6 +11,7 @@ import xyz.tehneon.plugins.staffdisplay.builder.MenuBuilder;
 import xyz.tehneon.plugins.staffdisplay.command.StaffDisplayCommand;
 import xyz.tehneon.plugins.staffdisplay.hook.PluginHook;
 import xyz.tehneon.plugins.staffdisplay.hook.impl.PermissionsExHook;
+import xyz.tehneon.plugins.staffdisplay.hook.impl.PowerfulPermsHook;
 import xyz.tehneon.plugins.staffdisplay.listener.MenuListener;
 
 import java.lang.reflect.Field;
@@ -57,8 +58,9 @@ public final class StaffDisplay extends JavaPlugin {
 
         // Register everything after the command just in case the command cannot register it will disable the plugin
 
-        Plugin targetPlugin = Bukkit.getPluginManager().getPlugin("PermissionsEx");
-        if (targetPlugin instanceof PermissionsEx) {
+        if (Bukkit.getPluginManager().getPlugin("PowerfulPerms") instanceof PowerfulPermsPlugin) {
+            permissionsHook = new PowerfulPermsHook(this);
+        } else if (Bukkit.getPluginManager().getPlugin("PermissionsEx") instanceof PermissionsEx) {
             permissionsHook = new PermissionsExHook(this);
         } else {
             getServer().getPluginManager().disablePlugin(this);

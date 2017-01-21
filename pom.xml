@@ -71,6 +71,11 @@
             <id>pex-repo</id>
             <url>http://pex-repo.aoeu.xyz</url>
         </repository>
+
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -85,6 +90,13 @@
             <groupId>ru.tehkode</groupId>
             <artifactId>PermissionsEx</artifactId>
             <version>1.23.2-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.CheeseSoftware</groupId>
+            <artifactId>PowerfulPermsAPI</artifactId>
+            <version>1.3.0</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
