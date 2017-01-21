@@ -1,3 +1,12 @@
+# Ability to change the usage of the command
+command:
+ # The main label for the command
+ label: "staffdisplay"
+ # Any other ways the command should be accessed
+ aliases:
+  - "staffd"
+  - "sd"
+
 # The mechanism which checks how often the plugin should update the GUI
 staff-updater:
   # How long should it wait per update
