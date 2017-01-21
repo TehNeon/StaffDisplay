@@ -1,8 +1,9 @@
-package xyz.tehneon.plugins.staffdisplay;
+package xyz.tehneon.plugins.staffdisplay.listener;
 
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import xyz.tehneon.plugins.staffdisplay.StaffDisplay;
 
 /**
  * @author TehNeon
