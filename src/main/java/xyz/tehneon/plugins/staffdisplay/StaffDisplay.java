@@ -1,11 +1,16 @@
 package xyz.tehneon.plugins.staffdisplay;
 
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandMap;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.SimplePluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
+import ru.tehkode.permissions.bukkit.PermissionsEx;
 import xyz.tehneon.plugins.staffdisplay.builder.MenuBuilder;
 import xyz.tehneon.plugins.staffdisplay.command.StaffDisplayCommand;
+import xyz.tehneon.plugins.staffdisplay.hook.PluginHook;
+import xyz.tehneon.plugins.staffdisplay.hook.impl.PermissionsExHook;
 import xyz.tehneon.plugins.staffdisplay.listener.MenuListener;
 
 import java.lang.reflect.Field;
@@ -20,6 +25,7 @@ public final class StaffDisplay extends JavaPlugin {
 
     private MenuBuilder menuBuilder;
     private BukkitRunnable updateTask;
+    private PluginHook permissionsHook;
 
     @Override
     public void onEnable() {
@@ -50,6 +56,16 @@ public final class StaffDisplay extends JavaPlugin {
         }
 
         // Register everything after the command just in case the command cannot register it will disable the plugin
+
+        Plugin targetPlugin = Bukkit.getPluginManager().getPlugin("PermissionsEx");
+        if (targetPlugin instanceof PermissionsEx) {
+            permissionsHook = new PermissionsExHook();
+        } else {
+            getServer().getPluginManager().disablePlugin(this);
+            new RuntimeException("The plugin could not start as there were no permission based plugins found.");
+            return;
+        }
+
         menuBuilder = new MenuBuilder(this);
         getServer().getPluginManager().registerEvents(new MenuListener(this), this);
 
@@ -70,5 +86,9 @@ public final class StaffDisplay extends JavaPlugin {
 
     public MenuBuilder getMenuBuilder() {
         return menuBuilder;
+    }
+
+    public PluginHook getPermissionsHook() {
+        return permissionsHook;
     }
 }
