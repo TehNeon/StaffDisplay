@@ -24,8 +24,29 @@ public class StaffDisplayCommand extends BukkitCommand {
 
     @Override
     public boolean execute(CommandSender sender, String commandLabel, String[] args) {
+        if (args.length > 0) {
+            String subCommand = args[0];
+            switch (subCommand.toLowerCase()) {
+                case "reload":
+                    break;
+                case "info":
+                    sender.sendMessage(ChatColor.GOLD + "StaffDisplay v");
+                    sender.sendMessage(ChatColor.GOLD + " Created by TehNeon.");
+                    return true;
+                default:
+                    sender.sendMessage(ChatColor.RED + "Invalid sub-command.");
+                    return true;
+            }
+        }
+
+        if (!sender.hasPermission(plugin.getConfig().getString("command.permission"))) {
+            sender.sendMessage(plugin.getConfig().getString("messages.no-permission"));
+            return true;
+        }
+
+        // Stop the console and any other source from executing the command as they cannot view/open inventories
         if (!(sender instanceof Player)) {
-            sender.sendMessage(ChatColor.RED + "Only players may execute this command.");
+            sender.sendMessage(ChatColor.RED + "Only players may execute this portion of the command.");
             return true;
         }
 

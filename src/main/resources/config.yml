@@ -37,3 +37,6 @@ menu:
 ranks:
  - "Owner"
  - "Admin"
+
+messages:
+ no-permission: "&cYou do not have permission to execute this command."
