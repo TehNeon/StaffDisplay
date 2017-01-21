@@ -7,4 +7,19 @@ package xyz.tehneon.plugins.staffdisplay.builder;
  * Class which holds all information related to users who should be inside the Staff Menu.
  */
 public class TargetUser {
+    private String username;
+    private String rankName;
+
+    public TargetUser(String username, String rankName) {
+        this.username = username;
+        this.rankName = rankName;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getRankName() {
+        return rankName;
+    }
 }

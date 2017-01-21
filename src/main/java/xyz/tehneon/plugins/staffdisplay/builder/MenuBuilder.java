@@ -5,6 +5,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.inventory.Inventory;
 import xyz.tehneon.plugins.staffdisplay.StaffDisplay;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author TehNeon
  * @since 1/21/2017
@@ -14,6 +17,7 @@ import xyz.tehneon.plugins.staffdisplay.StaffDisplay;
 public class MenuBuilder {
     private StaffDisplay plugin;
     private Inventory inventory;
+    private List<TargetUser> targetUserList = new ArrayList<>();
 
     public MenuBuilder(StaffDisplay plugin) {
         this.plugin = plugin;
