@@ -8,8 +8,12 @@ import org.bukkit.plugin.java.JavaPlugin;
  */
 public final class StaffDisplay extends JavaPlugin {
 
+    private MenuBuilder menuBuilder;
+
     @Override
     public void onEnable() {
+        menuBuilder = new MenuBuilder(this);
+
         getServer().getPluginManager().registerEvents(new MenuListener(this), this);
     }
 
