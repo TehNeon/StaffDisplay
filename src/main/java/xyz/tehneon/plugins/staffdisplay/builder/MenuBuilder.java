@@ -7,9 +7,6 @@ import org.bukkit.SkullType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
-import ru.tehkode.permissions.PermissionGroup;
-import ru.tehkode.permissions.PermissionUser;
-import ru.tehkode.permissions.bukkit.PermissionsEx;
 import xyz.tehneon.plugins.staffdisplay.StaffDisplay;
 
 import java.util.ArrayList;
@@ -75,17 +72,8 @@ public class MenuBuilder {
         // Clear it from old entries
         targetUserList.clear();
 
-        // Loop through all the ranks inside the config to grab
-        for (String rankName : plugin.getConfig().getStringList("ranks")) {
-            PermissionGroup permissionGroup = PermissionsEx.getPermissionManager().getGroup(rankName);
-            if (permissionGroup != null) {
-                for (PermissionUser permissionUser : permissionGroup.getUsers()) {
-                    targetUserList.add(new TargetUser(permissionUser.getName(), rankName));
-                }
-            } else {
-                plugin.getLogger().warning("The permission group/rank \"" + rankName + "\" does not seem to exist.");
-            }
-        }
+        plugin.getPermissionsHook().updatePlayers();
+
         buildMenu();
     }
 
@@ -119,5 +107,14 @@ public class MenuBuilder {
      */
     private int roundUp(double d) {
         return (d > (int) d) ? (int) d + 1 : (int) d;
+    }
+
+    /**
+     * Returns the list of players who are staff members
+     *
+     * @return Returns a list of {@link TargetUser}
+     */
+    public List<TargetUser> getTargetUserList() {
+        return targetUserList;
     }
 }

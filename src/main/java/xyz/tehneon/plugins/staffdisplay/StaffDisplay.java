@@ -59,7 +59,7 @@ public final class StaffDisplay extends JavaPlugin {
 
         Plugin targetPlugin = Bukkit.getPluginManager().getPlugin("PermissionsEx");
         if (targetPlugin instanceof PermissionsEx) {
-            permissionsHook = new PermissionsExHook();
+            permissionsHook = new PermissionsExHook(this);
         } else {
             getServer().getPluginManager().disablePlugin(this);
             new RuntimeException("The plugin could not start as there were no permission based plugins found.");
