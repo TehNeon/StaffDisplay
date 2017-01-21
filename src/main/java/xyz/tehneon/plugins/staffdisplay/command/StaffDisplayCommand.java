@@ -28,6 +28,11 @@ public class StaffDisplayCommand extends BukkitCommand {
             String subCommand = args[0];
             switch (subCommand.toLowerCase()) {
                 case "reload":
+                    if (!sender.hasPermission(plugin.getConfig().getString("command.permission") + "reload")) {
+                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("messages.no-permission")));
+                        return true;
+                    }
+
                     plugin.reloadConfig();
                     plugin.reload();
                     plugin.getMenuBuilder().updateMenu();
@@ -45,7 +50,7 @@ public class StaffDisplayCommand extends BukkitCommand {
             return true;
         }
 
-        if (!sender.hasPermission(plugin.getConfig().getString("command.permission"))) {
+        if (!sender.hasPermission(plugin.getConfig().getString("command.permission") + "use")) {
             sender.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("messages.no-permission")));
             return true;
         }

@@ -6,7 +6,9 @@ command:
  aliases:
   - "staffd"
   - "sd"
- permission: "staffdisplay.use"
+ # The base permission, following can be used:
+ # .use and .reload
+ permission: "staffdisplay."
 
 # The mechanism which checks how often the plugin should update the GUI
 staff-updater:
