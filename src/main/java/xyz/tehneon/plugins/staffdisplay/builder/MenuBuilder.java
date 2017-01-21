@@ -3,6 +3,9 @@ package xyz.tehneon.plugins.staffdisplay.builder;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.inventory.Inventory;
+import ru.tehkode.permissions.PermissionGroup;
+import ru.tehkode.permissions.PermissionUser;
+import ru.tehkode.permissions.bukkit.PermissionsEx;
 import xyz.tehneon.plugins.staffdisplay.StaffDisplay;
 
 import java.util.ArrayList;
@@ -29,7 +32,10 @@ public class MenuBuilder {
      * Builds/Creates the menu/inventory.
      */
     private void buildMenu() {
+        // Create the inventory menu, and the size based off of how many people are viewed/registered as staff
         inventory = Bukkit.createInventory(null, roundUp(targetUserList.size() / 9d), ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("menu.title")));
+
+        // TODO: Place items inside the menu
     }
 
 
@@ -39,7 +45,17 @@ public class MenuBuilder {
      * groups. This also builds the menu right after.
      */
     public void updateMenu() {
-
+        // Loop through all the ranks inside the config to grab
+        for (String rankName : plugin.getConfig().getStringList("ranks")) {
+            PermissionGroup permissionGroup = PermissionsEx.getPermissionManager().getGroup(rankName);
+            if (permissionGroup != null) {
+                for (PermissionUser permissionUser : permissionGroup.getUsers()) {
+                    targetUserList.add(new TargetUser(permissionUser.getName(), rankName));
+                }
+            } else {
+                plugin.getLogger().warning("The permission group/rank \"" + rankName + "\" does not seem to exist.");
+            }
+        }
         buildMenu();
     }
 
@@ -60,13 +76,14 @@ public class MenuBuilder {
      * @return Returns true if the provided menu is the same as the Staff heads menu
      */
     public boolean isTheMenu(Inventory otherInventory) {
-        return otherInventory.equals(getInventory());
+        return otherInventory.equals(getInventory()) || otherInventory.getTitle().equalsIgnoreCase(getInventory().getTitle()) && otherInventory.getSize() == getInventory().getSize();
     }
 
     /**
      * Rounds a value upwards.
-     *
+     * <p>
      * Found this on StackOverflow a long time ago and don't remember the link to credit for
+     *
      * @param d Double which needs to be rounded up
      * @return Returns the value rounded up
      */
