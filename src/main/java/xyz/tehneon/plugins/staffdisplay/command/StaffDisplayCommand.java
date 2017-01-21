@@ -50,6 +50,10 @@ public class StaffDisplayCommand extends BukkitCommand {
             return true;
         }
 
+        Player player = (Player) sender;
+        player.openInventory(plugin.getMenuBuilder().getInventory());
+        player.sendMessage(plugin.getConfig().getString("messages.opened"));
+
         return true;
     }
 }

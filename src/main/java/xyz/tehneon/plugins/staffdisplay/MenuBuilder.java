@@ -1,5 +1,6 @@
 package xyz.tehneon.plugins.staffdisplay;
 
+import org.bukkit.Bukkit;
 import org.bukkit.inventory.Inventory;
 
 /**
@@ -14,13 +15,15 @@ public class MenuBuilder {
 
     public MenuBuilder(StaffDisplay plugin) {
         this.plugin = plugin;
+
+        buildMenu();
     }
 
     /**
      * Builds/Creates the menu/inventory.
      */
     private void buildMenu() {
-
+        inventory = Bukkit.createInventory(null, 9, "Staff Display");
     }
 
 

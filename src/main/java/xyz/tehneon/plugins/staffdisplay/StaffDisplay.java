@@ -55,4 +55,8 @@ public final class StaffDisplay extends JavaPlugin {
     public void onDisable() {
 
     }
+
+    public MenuBuilder getMenuBuilder() {
+        return menuBuilder;
+    }
 }
