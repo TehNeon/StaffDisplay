@@ -5,6 +5,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 /**
  * @author TehNeon
  * @since 1/21/2017
+ * <p>
+ * The main class which holds instances to anything important.
  */
 public final class StaffDisplay extends JavaPlugin {
 

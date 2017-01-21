@@ -16,6 +16,23 @@ public class MenuBuilder {
         this.plugin = plugin;
     }
 
+    /**
+     * Builds/Creates the menu/inventory.
+     */
+    private void buildMenu() {
+
+    }
+
+
+    /**
+     * Hooks into permissions plugin and searches all users for their group/rank
+     * and adds them to the inventory if they are in one of the staff related
+     * groups.
+     */
+    public void updateMenu() {
+
+    }
+
 
     /**
      * Get the inventory which contains all the staff members
