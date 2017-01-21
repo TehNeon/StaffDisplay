@@ -1,5 +1,6 @@
 package xyz.tehneon.plugins.staffdisplay;
 
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.inventory.Inventory;
 
@@ -23,7 +24,7 @@ public class MenuBuilder {
      * Builds/Creates the menu/inventory.
      */
     private void buildMenu() {
-        inventory = Bukkit.createInventory(null, 9, "Staff Display");
+        inventory = Bukkit.createInventory(null, 9, ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("menu.title")));
     }
 
 
