@@ -10,7 +10,7 @@ public final class StaffDisplay extends JavaPlugin {
 
     @Override
     public void onEnable() {
-
+        getServer().getPluginManager().registerEvents(new MenuListener(this), this);
     }
 
     @Override
