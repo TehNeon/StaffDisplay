@@ -30,7 +30,7 @@ public class PowerfulPermsHook implements PluginHook {
         for (String rankName : plugin.getConfig().getStringList("ranks")) {
             Group group = powerfulPermsPlugin.getPermissionManager().getGroup(rankName);
             if(group != null) {
-
+                // TODO: Find a way to find all players who belong to a group inside PowerfulPerms
             } else {
                 plugin.getLogger().warning("The permission group/rank \"" + rankName + "\" does not seem to exist.");
             }
@@ -39,6 +39,6 @@ public class PowerfulPermsHook implements PluginHook {
 
     @Override
     public String getPluginName() {
-        return "PowerfulPerms";
+        return "PowerfulPerms [NOT FINISHED]";
     }
 }

@@ -12,6 +12,7 @@ import xyz.tehneon.plugins.staffdisplay.command.StaffDisplayCommand;
 import xyz.tehneon.plugins.staffdisplay.hook.PluginHook;
 import xyz.tehneon.plugins.staffdisplay.hook.impl.PermissionsExHook;
 import xyz.tehneon.plugins.staffdisplay.hook.impl.PowerfulPermsHook;
+import xyz.tehneon.plugins.staffdisplay.hook.impl.zPermissionsHook;
 import xyz.tehneon.plugins.staffdisplay.listener.MenuListener;
 
 import java.lang.reflect.Field;
@@ -58,7 +59,9 @@ public final class StaffDisplay extends JavaPlugin {
 
         // Register everything after the command just in case the command cannot register it will disable the plugin
 
-        if (Bukkit.getPluginManager().getPlugin("PowerfulPerms") instanceof PowerfulPermsPlugin) {
+        if (Bukkit.getPluginManager().getPlugin("zPermissions") instanceof PowerfulPermsPlugin) {
+            permissionsHook = new zPermissionsHook(this);
+        } else if (Bukkit.getPluginManager().getPlugin("PowerfulPerms") instanceof PowerfulPermsPlugin) {
             permissionsHook = new PowerfulPermsHook(this);
         } else if (Bukkit.getPluginManager().getPlugin("PermissionsEx") instanceof PermissionsEx) {
             permissionsHook = new PermissionsExHook(this);
