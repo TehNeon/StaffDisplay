@@ -40,7 +40,7 @@ public class StaffDisplayCommand extends BukkitCommand {
         }
 
         if (!sender.hasPermission(plugin.getConfig().getString("command.permission"))) {
-            sender.sendMessage(plugin.getConfig().getString("messages.no-permission"));
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("messages.no-permission")));
             return true;
         }
 
@@ -52,7 +52,7 @@ public class StaffDisplayCommand extends BukkitCommand {
 
         Player player = (Player) sender;
         player.openInventory(plugin.getMenuBuilder().getInventory());
-        player.sendMessage(plugin.getConfig().getString("messages.opened"));
+        player.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("messages.opened")));
 
         return true;
     }
