@@ -3,6 +3,7 @@ package xyz.tehneon.plugins.staffdisplay;
 import org.bukkit.command.CommandMap;
 import org.bukkit.plugin.SimplePluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+import xyz.tehneon.plugins.staffdisplay.builder.MenuBuilder;
 import xyz.tehneon.plugins.staffdisplay.command.StaffDisplayCommand;
 
 import java.lang.reflect.Field;

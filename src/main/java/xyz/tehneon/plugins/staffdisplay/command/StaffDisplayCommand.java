@@ -29,6 +29,7 @@ public class StaffDisplayCommand extends BukkitCommand {
             switch (subCommand.toLowerCase()) {
                 case "reload":
                     plugin.reloadConfig();
+                    plugin.getMenuBuilder().updateMenu();
                     sender.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("messages.reloaded")));
                     break;
                 case "info":

@@ -1,8 +1,9 @@
-package xyz.tehneon.plugins.staffdisplay;
+package xyz.tehneon.plugins.staffdisplay.builder;
 
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.inventory.Inventory;
+import xyz.tehneon.plugins.staffdisplay.StaffDisplay;
 
 /**
  * @author TehNeon
@@ -17,7 +18,7 @@ public class MenuBuilder {
     public MenuBuilder(StaffDisplay plugin) {
         this.plugin = plugin;
 
-        buildMenu();
+        updateMenu();
     }
 
     /**
@@ -31,10 +32,11 @@ public class MenuBuilder {
     /**
      * Hooks into permissions plugin and searches all users for their group/rank
      * and adds them to the inventory if they are in one of the staff related
-     * groups.
+     * groups. This also builds the menu right after.
      */
     public void updateMenu() {
 
+        buildMenu();
     }
 
 
