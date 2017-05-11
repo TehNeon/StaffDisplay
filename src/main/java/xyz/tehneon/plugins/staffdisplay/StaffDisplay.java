@@ -55,11 +55,11 @@ public final class StaffDisplay extends JavaPlugin {
                 commandMap.register(getConfig().getString("command.label"), new StaffDisplayCommand(this));
             } else {
                 getServer().getPluginManager().disablePlugin(this);
-                new RuntimeException("Your server software's PluginManager does not contain a commandMap so I cannot register a command. This may be due to the fact you might be running a custom Bukkit/Spigot version.");
+                getLogger().warning("Your server software's PluginManager does not contain a commandMap so I cannot register a command. This may be due to the fact you might be running a custom Bukkit/Spigot version.");
             }
         } else {
             getServer().getPluginManager().disablePlugin(this);
-            new RuntimeException("Your server software is running a PluginManager that is unrecognized. This may be due to the fact you might be running a custom Bukkit/Spigot version.");
+            getLogger().warning("Your server software is running a PluginManager that is unrecognized. This may be due to the fact you might be running a custom Bukkit/Spigot version.");
         }
 
         // Register everything after the command just in case the command cannot register it will disable the plugin
@@ -86,7 +86,7 @@ public final class StaffDisplay extends JavaPlugin {
 
         if (permissionsHook == null || targetPlugin == null) {
             getServer().getPluginManager().disablePlugin(this);
-            new RuntimeException("The plugin could not start as there were no permission based plugins found.");
+            getLogger().warning("The plugin could not start as there were no permission based plugins found.");
             return;
         }
 
