@@ -4,4 +4,4 @@ main: xyz.tehneon.plugins.staffdisplay.StaffDisplay
 authors: [TehNeon]
 description: ${project.description}
 
-softdepend: [PermissionsEx, PowerfulPerms, zPermissions]
+softdepend: [PermissionsEx, Vault]

@@ -1,3 +1,10 @@
+# Changing these options requires a restart/reboot
+hook:
+ # Automatically choose, if set to false it'll select the manual string
+ automated: true
+ # Choose the plugin name for the hook, which can be PermissionsEx or Vault
+ manual: "Vault"
+
 # Ability to change the usage of the command
 command:
  # The main label for the command (Only changes on server start up, or reload)

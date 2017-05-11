@@ -1,21 +1,21 @@
 package xyz.tehneon.plugins.staffdisplay;
 
-import com.github.cheesesoftware.PowerfulPermsAPI.PowerfulPermsPlugin;
-import org.bukkit.Bukkit;
+import lombok.Getter;
 import org.bukkit.command.CommandMap;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.SimplePluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
-import ru.tehkode.permissions.bukkit.PermissionsEx;
 import xyz.tehneon.plugins.staffdisplay.builder.MenuBuilder;
 import xyz.tehneon.plugins.staffdisplay.command.StaffDisplayCommand;
 import xyz.tehneon.plugins.staffdisplay.hook.PluginHook;
 import xyz.tehneon.plugins.staffdisplay.hook.impl.PermissionsExHook;
-import xyz.tehneon.plugins.staffdisplay.hook.impl.PowerfulPermsHook;
-import xyz.tehneon.plugins.staffdisplay.hook.impl.zPermissionsHook;
+import xyz.tehneon.plugins.staffdisplay.hook.impl.VaultHook;
 import xyz.tehneon.plugins.staffdisplay.listener.MenuListener;
 
 import java.lang.reflect.Field;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author TehNeon
@@ -23,11 +23,16 @@ import java.lang.reflect.Field;
  * <p>
  * The main class which holds instances to anything important.
  */
+
 public final class StaffDisplay extends JavaPlugin {
 
+    @Getter
     private MenuBuilder menuBuilder;
-    private BukkitRunnable updateTask;
+
+    @Getter
     private PluginHook permissionsHook;
+
+    private BukkitRunnable updateTask;
 
     @Override
     public void onEnable() {
@@ -50,24 +55,38 @@ public final class StaffDisplay extends JavaPlugin {
                 commandMap.register(getConfig().getString("command.label"), new StaffDisplayCommand(this));
             } else {
                 getServer().getPluginManager().disablePlugin(this);
-                new RuntimeException("Your server software's PluginManager does not contain a commandMap so I cannot register a command. This may be due to the fact you might be running a custom Bukkit/Spigot version.");
+                getLogger().warning("Your server software's PluginManager does not contain a commandMap so I cannot register a command. This may be due to the fact you might be running a custom Bukkit/Spigot version.");
             }
         } else {
             getServer().getPluginManager().disablePlugin(this);
-            new RuntimeException("Your server software is running a PluginManager that is unrecognized. This may be due to the fact you might be running a custom Bukkit/Spigot version.");
+            getLogger().warning("Your server software is running a PluginManager that is unrecognized. This may be due to the fact you might be running a custom Bukkit/Spigot version.");
         }
 
         // Register everything after the command just in case the command cannot register it will disable the plugin
+        List<PluginHook> hooks = Arrays.asList(new PermissionsExHook(this), new VaultHook(this));
+        // Cache the config data so we're not consistently grabbing it inside the loop
+        boolean automated = getConfig().getBoolean("hook.automated");
+        String manualHook = getConfig().getString("hook.manual");
+        Plugin targetPlugin = null;
+        for (PluginHook hook : hooks) {
+            if (automated) {
+                targetPlugin = getServer().getPluginManager().getPlugin(hook.getPluginName());
+                if (targetPlugin != null) {
+                    permissionsHook = hook;
+                    break;
+                }
+            } else {
+                if (hook.getPluginName().equalsIgnoreCase(manualHook)) {
+                    permissionsHook = hook;
+                    targetPlugin = getServer().getPluginManager().getPlugin(hook.getPluginName());
+                    break;
+                }
+            }
+        }
 
-        if (Bukkit.getPluginManager().getPlugin("zPermissions") instanceof PowerfulPermsPlugin) {
-            permissionsHook = new zPermissionsHook(this);
-        } else if (Bukkit.getPluginManager().getPlugin("PowerfulPerms") instanceof PowerfulPermsPlugin) {
-            permissionsHook = new PowerfulPermsHook(this);
-        } else if (Bukkit.getPluginManager().getPlugin("PermissionsEx") instanceof PermissionsEx) {
-            permissionsHook = new PermissionsExHook(this);
-        } else {
+        if (permissionsHook == null || targetPlugin == null) {
             getServer().getPluginManager().disablePlugin(this);
-            new RuntimeException("The plugin could not start as there were no permission based plugins found.");
+            getLogger().warning("The plugin could not start as there were no permission based plugins found.");
             return;
         }
 
@@ -95,13 +114,5 @@ public final class StaffDisplay extends JavaPlugin {
     @Override
     public void onDisable() {
 
-    }
-
-    public MenuBuilder getMenuBuilder() {
-        return menuBuilder;
-    }
-
-    public PluginHook getPermissionsHook() {
-        return permissionsHook;
     }
 }
