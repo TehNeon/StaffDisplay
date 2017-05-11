@@ -1,3 +1,4 @@
+# Changing these options requires a restart/reboot
 hook:
  # Automatically choose, if set to false it'll select the manual string
  automated: true
