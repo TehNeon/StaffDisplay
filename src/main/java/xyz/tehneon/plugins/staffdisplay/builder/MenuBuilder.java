@@ -75,11 +75,9 @@ public class MenuBuilder {
      * groups. This also builds the menu right after.
      */
     public void updateMenu() {
-        // Clear it from old entries
+        // Clear the list of users so we can load our new users
         targetUserList.clear();
-
         plugin.getPermissionsHook().updatePlayers();
-
         buildMenu();
     }
 
