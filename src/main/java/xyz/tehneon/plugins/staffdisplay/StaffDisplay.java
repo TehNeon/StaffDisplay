@@ -1,5 +1,6 @@
 package xyz.tehneon.plugins.staffdisplay;
 
+import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandMap;
 import org.bukkit.plugin.SimplePluginManager;
@@ -20,11 +21,16 @@ import java.lang.reflect.Field;
  * <p>
  * The main class which holds instances to anything important.
  */
+
 public final class StaffDisplay extends JavaPlugin {
 
+    @Getter
     private MenuBuilder menuBuilder;
-    private BukkitRunnable updateTask;
+
+    @Getter
     private PluginHook permissionsHook;
+
+    private BukkitRunnable updateTask;
 
     @Override
     public void onEnable() {
@@ -87,13 +93,5 @@ public final class StaffDisplay extends JavaPlugin {
     @Override
     public void onDisable() {
 
-    }
-
-    public MenuBuilder getMenuBuilder() {
-        return menuBuilder;
-    }
-
-    public PluginHook getPermissionsHook() {
-        return permissionsHook;
     }
 }
