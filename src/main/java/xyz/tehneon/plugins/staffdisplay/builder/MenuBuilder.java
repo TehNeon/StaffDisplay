@@ -77,7 +77,11 @@ public class MenuBuilder {
     public void updateMenu() {
         // Clear the list of users so we can load our new users
         targetUserList.clear();
+        // Do basic profiling so the we/whoever runs this plugin can see how long it takes for it to update the players
+        long startTime = System.currentTimeMillis();
         plugin.getPermissionsHook().updatePlayers();
+        plugin.getLogger().info("It took" + (System.currentTimeMillis() - startTime) + "ms to update the players for the " + plugin.getPermissionsHook().getPluginName() + " hook");
+        // Generate the menu contents
         buildMenu();
     }
 

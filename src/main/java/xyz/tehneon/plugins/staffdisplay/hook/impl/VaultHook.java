@@ -37,8 +37,6 @@ public class VaultHook implements PluginHook {
             return;
         }
 
-        long startTime = System.currentTimeMillis();
-
         // Cache the displayable ranks just so we aren't grabbing it constantly when we are looping through all the offline players
         List<String> displayableRanks = plugin.getConfig().getStringList("ranks");
 
@@ -54,8 +52,6 @@ public class VaultHook implements PluginHook {
                 }
             }
         }
-
-        plugin.getLogger().info("finished, took " + (System.currentTimeMillis() - startTime) + "ms");
     }
 
     @Override
