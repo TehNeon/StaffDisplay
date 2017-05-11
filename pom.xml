@@ -3,82 +3,50 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
-    <groupId>xyz.tehneon.plugins</groupId>
-    <artifactId>staffdisplay</artifactId>
-    <version>1.1</version>
-    <packaging>jar</packaging>
-
-    <name>StaffDisplay</name>
-    <description>Creates a displayable menu which hooks into a permissions plugin to list all staff members.
-    </description>
-
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
-    <build>
-        <defaultGoal>clean package</defaultGoal>
-        <plugins>
-            <plugin>
-                <version>3.1</version>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                </configuration>
-            </plugin>
+    <!-- Project Information -->
+    <groupId>xyz.tehneon.plugins</groupId>
+    <artifactId>staffdisplay</artifactId>
+    <name>StaffDisplay</name>
+    <description>
+        Creates a displayable menu which hooks into a permissions plugin to list all staff members.
+    </description>
+    <version>1.1</version>
+    <packaging>jar</packaging>
 
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <version>2.3</version>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>shade</goal>
-                        </goals>
-                        <configuration>
-                            <minimizeJar>true</minimizeJar>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-
-        <resources>
-            <resource>
-                <directory>src/main/resources</directory>
-                <filtering>true</filtering>
-            </resource>
-        </resources>
-    </build>
-
+    <!-- Repositories -->
     <repositories>
+        <!-- SpigotMC repo -->
         <repository>
             <id>spigotmc-repo</id>
             <url>https://hub.spigotmc.org/nexus/content/groups/public/</url>
         </repository>
 
+        <!-- Sonatype repo -->
         <repository>
             <id>sonatype</id>
             <url>https://oss.sonatype.org/content/groups/public/</url>
         </repository>
 
+        <!-- PermissionsEx repo -->
         <repository>
             <id>pex-repo</id>
             <url>http://pex-repo.aoeu.xyz</url>
         </repository>
 
+        <!-- JitPack repo -->
         <repository>
             <id>jitpack.io</id>
             <url>https://jitpack.io</url>
         </repository>
     </repositories>
 
+    <!-- Dependencies -->
     <dependencies>
+        <!-- SpigotAPI -->
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
@@ -86,6 +54,15 @@
             <scope>provided</scope>
         </dependency>
 
+        <!-- Lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.16.16</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- PermissionsEx -->
         <dependency>
             <groupId>ru.tehkode</groupId>
             <artifactId>PermissionsEx</artifactId>
@@ -100,4 +77,65 @@
             <scope>provided</scope>
         </dependency>
     </dependencies>
+
+    <!-- Build Settings -->
+    <build>
+        <defaultGoal>clean package</defaultGoal>
+        <finalName>${project.name}</finalName>
+
+        <!-- Resources -->
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+
+        <plugins>
+            <!-- JAR creation plugin -->
+            <plugin>
+                <version>3.1</version>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+
+            <!-- JAR shading plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>2.4</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- JAR git commit plugin -->
+            <plugin>
+                <groupId>pl.project13.maven</groupId>
+                <artifactId>git-commit-id-plugin</artifactId>
+                <version>2.2.1</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>revision</goal>
+                        </goals>
+                    </execution>
+                </executions>
+
+                <configuration>
+                    <commitIdGenerationMode>flat</commitIdGenerationMode>
+                    <abbrevLength>8</abbrevLength>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>
