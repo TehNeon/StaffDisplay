@@ -1,5 +1,5 @@
 name: StaffDisplay
-version: ${project.version}
+version: ${project.version}-${git.commit.id.abbrev}
 main: xyz.tehneon.plugins.staffdisplay.StaffDisplay
 authors: [TehNeon]
 description: ${project.description}
