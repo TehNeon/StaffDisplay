@@ -38,6 +38,31 @@ public final class StaffDisplay extends JavaPlugin {
     public void onEnable() {
         saveDefaultConfig();
 
+        if (!registerCommands() || !registerHook()) {
+            getLogger().warning("Disabling plugin due to the issue above");
+            getServer().getPluginManager().disablePlugin(this);
+            return;
+        }
+
+        menuBuilder = new MenuBuilder(this);
+        registerListeners();
+
+        updateTask = new BukkitRunnable() {
+            @Override
+            public void run() {
+                getMenuBuilder().updateMenu();
+            }
+        };
+
+        updateTask.runTaskLater(this, getConfig().getLong("staff-updater.delay") * 20);
+    }
+
+    @Override
+    public void onDisable() {
+
+    }
+
+    private boolean registerCommands() {
         // Thanks to ItsSteve for the general concept of using the commandMap to register commands without using the plugin.yml
         // Source: https://www.spigotmc.org/threads/small-easy-register-command-without-plugin-yml.38036/
         if (getServer().getPluginManager() instanceof SimplePluginManager) {
@@ -56,12 +81,17 @@ public final class StaffDisplay extends JavaPlugin {
             } else {
                 getServer().getPluginManager().disablePlugin(this);
                 getLogger().warning("Your server software's PluginManager does not contain a commandMap so I cannot register a command. This may be due to the fact you might be running a custom Bukkit/Spigot version.");
+                return false;
             }
         } else {
-            getServer().getPluginManager().disablePlugin(this);
             getLogger().warning("Your server software is running a PluginManager that is unrecognized. This may be due to the fact you might be running a custom Bukkit/Spigot version.");
+            return false;
         }
 
+        return true;
+    }
+
+    private boolean registerHook() {
         // Register everything after the command just in case the command cannot register it will disable the plugin
         List<PluginHook> hooks = Arrays.asList(new PermissionsExHook(this), new VaultHook(this));
         // Cache the config data so we're not consistently grabbing it inside the loop
@@ -85,9 +115,13 @@ public final class StaffDisplay extends JavaPlugin {
         }
 
         if (permissionsHook == null || targetPlugin == null) {
-            getServer().getPluginManager().disablePlugin(this);
-            getLogger().warning("The plugin could not start as there were no permission based plugins found.");
-            return;
+            if (automated) {
+                getLogger().warning("We could not automatically find a permissions plugin that we are capable of hooking");
+            } else {
+                getLogger().warning("We could not find manual hook target \"" + manualHook + "\" are you sure you're specifying the correct manual hook?");
+            }
+
+            return false;
         }
 
         getLogger().info("Using permissions hook for: " + permissionsHook.getPluginName());
@@ -98,21 +132,10 @@ public final class StaffDisplay extends JavaPlugin {
             }
         }.runTaskLater(this, 1L);
 
-        menuBuilder = new MenuBuilder(this);
-        getServer().getPluginManager().registerEvents(new MenuListener(this), this);
-
-        updateTask = new BukkitRunnable() {
-            @Override
-            public void run() {
-                getMenuBuilder().updateMenu();
-            }
-        };
-
-        updateTask.runTaskLater(this, getConfig().getLong("staff-updater.delay") * 20);
+        return true;
     }
 
-    @Override
-    public void onDisable() {
-
+    private void registerListeners() {
+        getServer().getPluginManager().registerEvents(new MenuListener(this), this);
     }
 }
