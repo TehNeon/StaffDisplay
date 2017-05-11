@@ -1,19 +1,21 @@
 package xyz.tehneon.plugins.staffdisplay;
 
 import lombok.Getter;
-import org.bukkit.Bukkit;
 import org.bukkit.command.CommandMap;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.SimplePluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
-import ru.tehkode.permissions.bukkit.PermissionsEx;
 import xyz.tehneon.plugins.staffdisplay.builder.MenuBuilder;
 import xyz.tehneon.plugins.staffdisplay.command.StaffDisplayCommand;
 import xyz.tehneon.plugins.staffdisplay.hook.PluginHook;
 import xyz.tehneon.plugins.staffdisplay.hook.impl.PermissionsExHook;
+import xyz.tehneon.plugins.staffdisplay.hook.impl.VaultHook;
 import xyz.tehneon.plugins.staffdisplay.listener.MenuListener;
 
 import java.lang.reflect.Field;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author TehNeon
@@ -61,9 +63,28 @@ public final class StaffDisplay extends JavaPlugin {
         }
 
         // Register everything after the command just in case the command cannot register it will disable the plugin
-        if (Bukkit.getPluginManager().getPlugin("PermissionsEx") instanceof PermissionsEx) {
-            permissionsHook = new PermissionsExHook(this);
-        } else {
+        List<PluginHook> hooks = Arrays.asList(new PermissionsExHook(this), new VaultHook(this));
+        // Cache the config data so we're not consistently grabbing it inside the loop
+        boolean automated = getConfig().getBoolean("hook.automated");
+        String manualHook = getConfig().getString("hook.manual");
+        Plugin targetPlugin = null;
+        for (PluginHook hook : hooks) {
+            if (automated) {
+                targetPlugin = getServer().getPluginManager().getPlugin(hook.getPluginName());
+                if (targetPlugin != null) {
+                    permissionsHook = hook;
+                    break;
+                }
+            } else {
+                if (hook.getPluginName().equalsIgnoreCase(manualHook)) {
+                    permissionsHook = hook;
+                    targetPlugin = getServer().getPluginManager().getPlugin(hook.getPluginName());
+                    break;
+                }
+            }
+        }
+
+        if (permissionsHook == null || targetPlugin == null) {
             getServer().getPluginManager().disablePlugin(this);
             new RuntimeException("The plugin could not start as there were no permission based plugins found.");
             return;
