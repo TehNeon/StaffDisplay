@@ -23,31 +23,31 @@ public class VaultHook implements PluginHook {
 
     @Override
     public void init() {
-        permissions = plugin.getServer().getServicesManager().getRegistration(Permission.class).getProvider();
+        this.permissions = this.plugin.getServer().getServicesManager().getRegistration(Permission.class).getProvider();
 
-        if (permissions == null) {
-            plugin.getLogger().severe("Failed to grab Permissions service");
+        if (this.permissions == null) {
+            this.plugin.getLogger().severe("Failed to grab Permissions service");
         }
     }
 
     @Override
     public void updatePlayers() {
-        if (permissions == null) {
-            plugin.getLogger().severe("Could not update the players as the permissions service could not be found");
+        if (this.permissions == null) {
+            this.plugin.getLogger().severe("Could not update the players as the permissions service could not be found");
             return;
         }
 
         // Cache the displayable ranks just so we aren't grabbing it constantly when we are looping through all the offline players
-        List<String> displayableRanks = plugin.getConfig().getStringList("ranks");
+        List<String> displayableRanks = this.plugin.getConfig().getStringList("ranks");
 
-        for (OfflinePlayer offlinePlayer : plugin.getServer().getOfflinePlayers()) {
+        for (OfflinePlayer offlinePlayer : this.plugin.getServer().getOfflinePlayers()) {
             //  Grabs all the groups the player is apart of
-            String[] usersGroups = permissions.getPlayerGroups(plugin.getServer().getWorlds().get(0).getName(), offlinePlayer);
+            String[] usersGroups = this.permissions.getPlayerGroups(this.plugin.getServer().getWorlds().get(0).getName(), offlinePlayer);
 
             for (String findRank : displayableRanks) {
                 for (String usersGroup : usersGroups) {
                     if (usersGroup.equalsIgnoreCase(findRank)) {
-                        plugin.getMenuBuilder().getTargetUserList().add(new TargetUser(offlinePlayer.getName(), findRank));
+                        this.plugin.getMenuBuilder().getTargetUserList().add(new TargetUser(offlinePlayer.getName(), findRank));
                     }
                 }
             }

@@ -21,7 +21,7 @@ public class MenuListener implements Listener {
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
         if (event.getClickedInventory() != null) {
-            if (plugin.getMenuBuilder().isTheMenu(event.getClickedInventory())) {
+            if (this.plugin.getMenuBuilder().isTheMenu(event.getClickedInventory())) {
                 event.setCancelled(true);
             }
         }

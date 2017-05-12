@@ -29,28 +29,28 @@ public class StaffDisplayCommand extends BukkitCommand {
             switch (subCommand.toLowerCase()) {
                 case "reload":
                     if (!sender.hasPermission(plugin.getConfig().getString("command.permission") + "reload")) {
-                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("messages.no-permission")));
+                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', this.plugin.getConfig().getString("messages.no-permission")));
                         return true;
                     }
 
-                    plugin.reloadConfig();
-                    plugin.getMenuBuilder().updateMenu();
-                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("messages.reloaded")));
+                    this.plugin.reloadConfig();
+                    this.plugin.getMenuBuilder().updateMenu();
+                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', this.plugin.getConfig().getString("messages.reloaded")));
                     break;
                 case "info":
                     sender.sendMessage(ChatColor.GOLD + "StaffDisplay v" + plugin.getDescription().getVersion());
                     sender.sendMessage(ChatColor.GOLD + " Created by TehNeon.");
                     break;
                 default:
-                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("messages.invalid-subcommand")));
+                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', this.plugin.getConfig().getString("messages.invalid-subcommand")));
                     break;
             }
 
             return true;
         }
 
-        if (!sender.hasPermission(plugin.getConfig().getString("command.permission") + "use")) {
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("messages.no-permission")));
+        if (!sender.hasPermission(this.plugin.getConfig().getString("command.permission") + "use")) {
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', this.plugin.getConfig().getString("messages.no-permission")));
             return true;
         }
 
@@ -61,8 +61,8 @@ public class StaffDisplayCommand extends BukkitCommand {
         }
 
         Player player = (Player) sender;
-        player.openInventory(plugin.getMenuBuilder().getInventory());
-        player.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("messages.opened")));
+        player.openInventory(this.plugin.getMenuBuilder().getInventory());
+        player.sendMessage(ChatColor.translateAlternateColorCodes('&', this.plugin.getConfig().getString("messages.opened")));
 
         return true;
     }

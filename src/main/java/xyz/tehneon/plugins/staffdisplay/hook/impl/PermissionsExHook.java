@@ -27,14 +27,14 @@ public class PermissionsExHook implements PluginHook {
     @Override
     public void updatePlayers() {
         // Loop through all the ranks inside the config to grab
-        for (String rankName : plugin.getConfig().getStringList("ranks")) {
+        for (String rankName : this.plugin.getConfig().getStringList("ranks")) {
             PermissionGroup permissionGroup = PermissionsEx.getPermissionManager().getGroup(rankName);
             if (permissionGroup != null) {
                 for (PermissionUser permissionUser : permissionGroup.getUsers()) {
-                    plugin.getMenuBuilder().getTargetUserList().add(new TargetUser(permissionUser.getName(), rankName));
+                    this.plugin.getMenuBuilder().getTargetUserList().add(new TargetUser(permissionUser.getName(), rankName));
                 }
             } else {
-                plugin.getLogger().warning("The permission group/rank \"" + rankName + "\" does not seem to exist.");
+                this.plugin.getLogger().warning("The permission group/rank \"" + rankName + "\" does not seem to exist.");
             }
         }
     }

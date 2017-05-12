@@ -30,7 +30,7 @@ public class MenuBuilder {
         // Run the update 2 ticks after startup so that all plugins are loaded properly, allowing for Hooks to properly be set in place
         new BukkitRunnable() {
             public void run() {
-                updateMenu();
+                MenuBuilder.this.updateMenu();
             }
         }.runTaskLater(plugin, 2L);
     }
@@ -40,22 +40,22 @@ public class MenuBuilder {
      */
     private void buildMenu() {
         // Create the inventory menu, and the size based off of how many people are viewed/registered as staff
-        inventory = Bukkit.createInventory(null, 9 * roundUp(targetUserList.size() / 9d), ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("menu.title")));
+        this.inventory = Bukkit.createInventory(null, 9 * roundUp(this.targetUserList.size() / 9d), ChatColor.translateAlternateColorCodes('&', this.plugin.getConfig().getString("menu.title")));
 
-        for (TargetUser targetUser : targetUserList) {
+        for (TargetUser targetUser : this.targetUserList) {
             String configSection = "default";
-            if (plugin.getConfig().get("menu.items." + targetUser.getRankName()) != null) {
+            if (this.plugin.getConfig().get("menu.items." + targetUser.getRankName()) != null) {
                 configSection = targetUser.getRankName();
             }
 
             ItemStack itemStack = new ItemStack(Material.SKULL_ITEM, 1, (short) SkullType.PLAYER.ordinal());
             SkullMeta skullMeta = (SkullMeta) itemStack.getItemMeta();
             skullMeta.setOwner(targetUser.getUsername());
-            skullMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("menu.items." + configSection + ".display").replace("{username}", targetUser.getUsername())));
+            skullMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', this.plugin.getConfig().getString("menu.items." + configSection + ".display").replace("{username}", targetUser.getUsername())));
 
             List<String> itemLore = new ArrayList<>();
 
-            for (String loreItem : plugin.getConfig().getStringList("menu.items." + configSection + ".lore")) {
+            for (String loreItem : this.plugin.getConfig().getStringList("menu.items." + configSection + ".lore")) {
                 loreItem = loreItem.replace("{username}", targetUser.getUsername());
                 loreItem = loreItem.replace("{rank}", targetUser.getRankName());
 
@@ -64,7 +64,7 @@ public class MenuBuilder {
             skullMeta.setLore(itemLore);
 
             itemStack.setItemMeta(skullMeta);
-            inventory.addItem(itemStack);
+            this.inventory.addItem(itemStack);
         }
     }
 
@@ -76,11 +76,11 @@ public class MenuBuilder {
      */
     public void updateMenu() {
         // Clear the list of users so we can load our new users
-        targetUserList.clear();
+        this.targetUserList.clear();
         // Do basic profiling so the we/whoever runs this plugin can see how long it takes for it to update the players
         long startTime = System.currentTimeMillis();
-        plugin.getPermissionsHook().updatePlayers();
-        plugin.getLogger().info("It took " + (System.currentTimeMillis() - startTime) + "ms to update the players for the " + plugin.getPermissionsHook().getPluginName() + " hook");
+        this.plugin.getPermissionsHook().updatePlayers();
+        this.plugin.getLogger().info("It took " + (System.currentTimeMillis() - startTime) + "ms to update the players for the " + this.plugin.getPermissionsHook().getPluginName() + " hook");
         // Generate the menu contents
         buildMenu();
     }
@@ -92,7 +92,7 @@ public class MenuBuilder {
      * @return Inventory/menu which contains all the staff members heads
      */
     public Inventory getInventory() {
-        return inventory;
+        return this.inventory;
     }
 
     /**
@@ -123,6 +123,6 @@ public class MenuBuilder {
      * @return Returns a list of {@link TargetUser}
      */
     public List<TargetUser> getTargetUserList() {
-        return targetUserList;
+        return this.targetUserList;
     }
 }
