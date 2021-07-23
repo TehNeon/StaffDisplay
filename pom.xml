@@ -85,6 +85,15 @@
         </dependency>
     </dependencies>
 
+
+        <!-- PowerRanks -->
+        <dependency>
+            <groupId>nl.svenar</groupId>
+            <artifactId>PowerRanks</artifactId>
+            <version>1.9.9R3</version>
+            <scope>provided</scope>
+        </dependency>
+
     <!-- Build Settings -->
     <build>
         <defaultGoal>clean package</defaultGoal>
