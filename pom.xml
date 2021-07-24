@@ -48,6 +48,13 @@
             <id>vault-repo</id>
             <url>http://nexus.hc.to/content/repositories/pub_releases</url>
         </repository>
+
+        <!-- Svenar Repo --!>
+	<repository>
+	     <id>svenar</id>
+	     <url>https://svenar.nl/repo/</url>
+	</repository>
+
     </repositories>
 
     <!-- Dependencies -->
