@@ -11,6 +11,7 @@ import xyz.tehneon.plugins.staffdisplay.command.StaffDisplayCommand;
 import xyz.tehneon.plugins.staffdisplay.hook.PluginHook;
 import xyz.tehneon.plugins.staffdisplay.hook.impl.PermissionsExHook;
 import xyz.tehneon.plugins.staffdisplay.hook.impl.VaultHook;
+import xyz.tehneon.plugins.staffdisplay.hook.impl.PowerRanksHook;
 import xyz.tehneon.plugins.staffdisplay.listener.MenuListener;
 
 import java.lang.reflect.Field;
