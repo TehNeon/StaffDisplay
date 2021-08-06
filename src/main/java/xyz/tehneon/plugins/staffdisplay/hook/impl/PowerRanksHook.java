@@ -1,7 +1,7 @@
 package xyz.tehneon.plugins.staffdisplay.hook.impl;
+package nl.svenar.PowerRanks.addons;
 
 import nl.svenar.powerranks.PowerRanks;
-import nl.svenar.powerranks.api.PowerRanksAPI;
 import org.bukkit.OfflinePlayer;
 import xyz.tehneon.plugins.staffdisplay.StaffDisplay;
 import xyz.tehneon.plugins.staffdisplay.builder.TargetUser;
@@ -13,50 +13,74 @@ import java.util.List;
  * @author TehNeon
  * @since 1/21/2017
  */
-public class PowerRanksHook implements PluginHook {
+import java.util.ArrayList;
 
-    private StaffDisplay plugin;
-    private Permission permissions;
+import nl.svenar.PowerRanks.Events.ChatTabExecutor;
 
-    public PowerRanksHook(StaffDisplay plugin) {
-        this.plugin = plugin;
-    }
+public abstract class PowerRanksAddon {
 
-    @Override
-    public void init() {
-        this.permissions = this.plugin.getServer().getServicesManager().getRegistration(Permission.class).getProvider();
+	// The author's name
+	// ex. return "Your Name";
+	public String getAuthor() {
+		return "TehNeon";
+	}
 
-        if (this.permissions == null) {
-            this.plugin.getLogger().severe("Failed to grab Permissions service");
-        }
-    }
+	// The addon's name
+	// ex. return "myAwesomeAddon";
+	public String getIdentifier() {
+		return "StaffDisplay";
+	}
 
-    @Override
-    public void updatePlayers() {
-        if (this.permissions == null) {
-            this.plugin.getLogger().severe("Could not update the players as the permissions service could not be found");
-            return;
-        }
+	// The addon's version
+	// ex. return "1.0";
+	public String getVersion() {
+		return "3.0";
+	}
 
-        // Cache the displayable ranks just so we aren't grabbing it constantly when we are looping through all the offline players
-        List<String> displayableRanks = this.plugin.getConfig().getStringList("ranks");
+	// The minimal requires PowerRanks version
+	// ex. return "1.0";
+	public String minimalPowerRanksVersion() {
+		return "2.0";
+	}
 
-        for (OfflinePlayer offlinePlayer : this.plugin.getServer().getOfflinePlayers()) {
-            //  Grabs all the groups the player is apart of
-            String[] usersGroups = this.permissions.getPlayerGroups(this.plugin.getServer().getWorlds().get(0).getName(), offlinePlayer);
+	// This function is called once on add-on load
+	public void setup() {
+	}
 
-            for (String findRank : displayableRanks) {
-                for (String usersGroup : usersGroups) {
-                    if (usersGroup.equalsIgnoreCase(findRank)) {
-                        this.plugin.getMenuBuilder().getTargetUserList().add(new TargetUser(offlinePlayer.getName(), findRank));
-                    }
-                }
-            }
-        }
-    }
+	// Called when a player joins the server
+	public void onPlayerJoin(PowerRanksPlayer prPlayer) {
+	}
 
-    @Override
-    public String getPluginName() {
-        return "PowerRanks";
-    }
+	// Called when a player leaves the server
+	public void onPlayerLeave(PowerRanksPlayer prPlayer) {
+	}
+
+	// Player movement handler
+	// Executed when a player has moved
+	public void onPlayerMove(PowerRanksPlayer prPlayer) {
+	}
+
+	// Called when a player's rank changes
+	public void onPlayerRankChange(PowerRanksPlayer prPlayer, String oldRank, String newRank, RankChangeCause cause, boolean isPlayerOnline) {
+	}
+
+	// Chat handler
+	// The chat message can be altered here
+	// has the current chat format as argument, and it must be returned again
+	public String onPlayerChat(PowerRanksPlayer prPlayer, String chatFormat, String message) {
+		return chatFormat;
+	}
+
+	// Command handler
+	// Executed when a default PowerRanks command is not found
+	// return true after a custom command is handled, otherwise the unknown command
+	// message will display, by default it should return false
+	public boolean onPowerRanksCommand(PowerRanksPlayer prPlayer, boolean sendAsPlayer, String command, String[] arguments) {
+		return false;
+	}
+	
+	// Player world change handler
+	// Executed when a player has entered a different world
+	public void onPlayerWorldChange(PowerRanksPlayer prPlayer, World world, World world2) {
+	}
 }
