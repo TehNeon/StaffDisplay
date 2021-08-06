@@ -10,7 +10,7 @@ import xyz.tehneon.plugins.staffdisplay.hook.PluginHook;
 import java.util.List;
 
 /**
- * @author TehNeon
+ * @author TehNeon and Jonfirexbox
  * @since 1/21/2017
  */
 import java.util.ArrayList;
